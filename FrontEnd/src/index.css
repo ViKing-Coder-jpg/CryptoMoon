@@ -12,12 +12,29 @@
 }
 
 @layer base {
+  :root {
+    --bg-main: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --text-main: #1A1A1A;
+    --text-muted: #6B7280;
+    --border-main: #F3F4F6;
+  }
+
+  .dark {
+    --bg-main: #0B0F1A;
+    --card-bg: #1C2533;
+    --text-main: #FFFFFF;
+    --text-muted: #9CA3AF;
+    --border-main: rgba(255, 255, 255, 0.05);
+  }
+
   body {
-    @apply font-sans antialiased bg-[#F9FAFB] text-[#1A1A1A];
+    @apply font-sans antialiased transition-colors duration-300;
+    background-color: var(--bg-main);
+    color: var(--text-main);
   }
 }
 
-/* Custom fonts if needed, or just use standard sans with Tailwind */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 :root {

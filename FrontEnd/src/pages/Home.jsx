@@ -1,28 +1,28 @@
 import React from 'react';
-import { Sparkles, Zap, TrendingUp, History, Info, Share2, Globe, Mail } from 'lucide-react';
+import { Sparkles, Zap, TrendingUp, History, Share2, Globe, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300 text-dark-gray dark:text-white">
             {/* Hero Section */}
             <section className="max-w-[1440px] mx-auto px-10 py-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                 <div className="flex flex-col gap-8">
                     <div className="bg-primary/10 text-primary-hover px-4 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase self-start">
                         Next-Gen AI Forecasting
                     </div>
-                    <h1 className="text-7xl font-extrabold leading-[1.1] text-dark-gray tracking-tighter">
+                    <h1 className="text-7xl font-extrabold leading-[1.1] tracking-tighter">
                         Predict Bitcoin.<br />
                         <span className="text-primary italic">Ride the Future.</span>
                     </h1>
-                    <p className="text-muted-gray text-lg leading-relaxed max-w-md">
+                    <p className="text-muted-gray dark:text-gray-400 text-lg leading-relaxed max-w-md">
                         Harness the power of neural networks for institutional-grade Bitcoin price forecasting. Real-time analytics for the modern digital asset explorer.
                     </p>
                     <div className="flex gap-4">
                         <Link to="/predictions" className="bg-primary text-dark-gray px-10 py-4 rounded-full font-bold shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform flex items-center gap-2 uppercase tracking-wide">
                             Start Predicting
                         </Link>
-                        <button className="border-2 border-primary text-dark-gray px-10 py-4 rounded-full font-bold hover:bg-primary/5 transition-colors uppercase tracking-wide">
+                        <button className="border-2 border-primary text-dark-gray dark:text-white px-10 py-4 rounded-full font-bold hover:bg-primary/5 transition-colors uppercase tracking-wide">
                             View Live Charts
                         </button>
                     </div>
@@ -33,16 +33,16 @@ const Home = () => {
                     <img
                         src="https://images.unsplash.com/photo-1621416848440-2369c1794695?q=80&w=1000&auto=format&fit=crop"
                         alt="Bitcoin Future"
-                        className="relative rounded-[40px] shadow-2xl border-2 border-white/50"
+                        className="relative rounded-[40px] shadow-2xl border-2 border-white/50 dark:border-white/10"
                     />
                 </div>
             </section>
 
             {/* Premium Intelligence Section */}
-            <section className="bg-[#F9FAFB] py-24">
+            <section className="bg-gray-50 dark:bg-gray-900/50 py-24 transition-colors duration-300">
                 <div className="max-w-[1440px] mx-auto px-10 text-center flex flex-col items-center gap-4 mb-16">
-                    <h2 className="text-4xl font-black text-dark-gray">Premium Intelligence</h2>
-                    <p className="text-muted-gray text-lg">Advanced analytical tools for high-precision decision making.</p>
+                    <h2 className="text-4xl font-black">Premium Intelligence</h2>
+                    <p className="text-muted-gray dark:text-gray-400 text-lg">Advanced analytical tools for high-precision decision making.</p>
                 </div>
 
                 <div className="max-w-[1440px] mx-auto px-10 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -52,13 +52,13 @@ const Home = () => {
                         { icon: <TrendingUp className="text-primary" />, title: 'Indicator Insights', desc: 'Proprietary technical signals refined by algorithmic history.' },
                         { icon: <History className="text-primary" />, title: 'Historical Analysis', desc: 'Backtested performance reports across multiple bull cycles.' },
                     ].map((feature, i) => (
-                        <div key={i} className="bg-white p-10 rounded-[40px] shadow-sm border border-gray-100 flex flex-col gap-6 hover:shadow-xl hover:-translate-y-2 transition-all group">
+                        <div key={i} className="bg-white dark:bg-gray-800 p-10 rounded-[40px] shadow-sm border border-gray-100 dark:border-white/5 flex flex-col gap-6 hover:shadow-xl hover:-translate-y-2 transition-all group">
                             <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-primary transition-colors">
                                 <span className="group-hover:text-white transition-colors">{feature.icon}</span>
                             </div>
                             <div className="flex flex-col gap-3">
-                                <h3 className="text-xl font-bold text-dark-gray">{feature.title}</h3>
-                                <p className="text-muted-gray text-sm leading-relaxed">{feature.desc}</p>
+                                <h3 className="text-xl font-bold">{feature.title}</h3>
+                                <p className="text-muted-gray dark:text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
                             </div>
                         </div>
                     ))}
@@ -66,27 +66,27 @@ const Home = () => {
             </section>
 
             {/* Live Market Status Section */}
-            <section className="py-24 bg-white">
+            <section className="py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
                 <div className="max-w-[1000px] mx-auto px-10">
-                    <div className="bg-white rounded-[48px] shadow-2xl border border-gray-100 p-16 flex flex-col md:flex-row items-center gap-16 overflow-hidden relative">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+                    <div className="bg-white dark:bg-gray-800 rounded-[48px] shadow-2xl border border-gray-100 dark:border-white/5 p-16 flex flex-col md:flex-row items-center gap-16 overflow-hidden relative">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl text-primary"></div>
 
                         <div className="flex-1 flex flex-col gap-6 relative">
                             <div className="bg-primary/10 text-primary-hover px-4 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase self-start">
                                 Live Market Status
                             </div>
-                            <h2 className="text-4xl font-black text-dark-gray">Bitcoin (BTC)</h2>
+                            <h2 className="text-4xl font-black">Bitcoin (BTC)</h2>
                             <div className="flex items-baseline gap-4">
-                                <span className="text-6xl font-black text-dark-gray">$68,432.10</span>
+                                <span className="text-6xl font-black">$68,432.10</span>
                                 <span className="text-green-500 font-bold flex items-center gap-1"><TrendingUp size={18} /> +3.24%</span>
                             </div>
                             <div className="flex gap-4">
-                                <div className="bg-gray-50 px-6 py-4 rounded-3xl border border-gray-100">
-                                    <span className="text-[10px] text-muted-gray uppercase font-bold block mb-1">24H Low</span>
+                                <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 rounded-3xl border border-gray-100 dark:border-white/5">
+                                    <span className="text-[10px] text-muted-gray dark:text-gray-400 uppercase font-bold block mb-1">24H Low</span>
                                     <span className="text-lg font-bold">$66,120</span>
                                 </div>
-                                <div className="bg-gray-50 px-6 py-4 rounded-3xl border border-gray-100">
-                                    <span className="text-[10px] text-muted-gray uppercase font-bold block mb-1">24H High</span>
+                                <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 rounded-3xl border border-gray-100 dark:border-white/5">
+                                    <span className="text-[10px] text-muted-gray dark:text-gray-400 uppercase font-bold block mb-1">24H High</span>
                                     <span className="text-lg font-bold">$69,500</span>
                                 </div>
                             </div>
@@ -100,13 +100,13 @@ const Home = () => {
                                 <defs>
                                     <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#FFCC00" />
-                                        <stop offset="100%" stopColor="white" />
+                                        <stop offset="100%" stopColor="transparent" />
                                     </linearGradient>
                                 </defs>
                             </svg>
                             <div className="flex justify-between mt-4 px-2">
                                 {['00:00', '06:00', '12:00', '18:00', '24:00'].map(t => (
-                                    <span key={t} className="text-[10px] font-bold text-gray-400">{t}</span>
+                                    <span key={t} className="text-[10px] font-bold text-gray-400 dark:text-gray-500">{t}</span>
                                 ))}
                             </div>
                         </div>
@@ -115,19 +115,19 @@ const Home = () => {
             </section>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-100 py-12">
+            <footer className="bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-white/5 py-12 transition-colors duration-300">
                 <div className="max-w-[1440px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div className="flex items-center gap-3 grayscale opacity-70">
+                    <div className="flex items-center gap-3 opacity-70 dark:opacity-100">
                         <div className="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-black text-lg">B</div>
-                        <strong className="text-lg tracking-tight text-dark-gray">CryptoMoon</strong>
+                        <strong className="text-lg tracking-tight">CryptoMoon</strong>
                     </div>
-                    <div className="text-xs text-muted-gray font-medium uppercase tracking-widest">
+                    <div className="text-xs text-muted-gray dark:text-gray-400 font-medium uppercase tracking-widest">
                         © 2024 CryptoMoon Predictive Labs. All rights reserved.
                     </div>
                     <div className="flex gap-6 text-primary">
-                        <Globe size={20} className="cursor-pointer hover:opacity-70" />
-                        <Share2 size={20} className="cursor-pointer hover:opacity-70" />
-                        <Mail size={20} className="cursor-pointer hover:opacity-70" />
+                        <Globe size={20} className="cursor-pointer hover:opacity-70 transition-opacity" />
+                        <Share2 size={20} className="cursor-pointer hover:opacity-70 transition-opacity" />
+                        <Mail size={20} className="cursor-pointer hover:opacity-70 transition-opacity" />
                     </div>
                 </div>
             </footer>
