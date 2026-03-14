@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink ,Link} from 'react-router-dom'
 
 const links = [
   { label: 'Home', to: '/' },
@@ -38,12 +38,9 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4 text-sm font-semibold">
-            <NavLink to="/" className="text-darkText hover:text-gray-600">
-              Sign In
-            </NavLink>
-            <button className="rounded-full bg-gold px-5 py-2.5 text-darkText shadow-[0_12px_24px_rgba(240,180,41,0.35)]">
+            <Link to='/predictions'><button className="rounded-full bg-gold px-5 py-2.5 text-darkText shadow-[0_12px_24px_rgba(240,180,41,0.35)]">
               Get Started
-            </button>
+            </button></Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { MarketStatusCard } from '../components/MarketStatusCard.jsx'
+import {Link} from 'react-router-dom'
 
 const features = [
   {
@@ -41,12 +42,12 @@ export function Home() {
                 Harness the power of neural networks for institutional-grade Bitcoin price forecasting. Real-time analytics for the modern digital asset explorer.
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
-                <button className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-darkText shadow-lg shadow-gold/30">
+                <Link to='/predictions'><button className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-darkText shadow-lg shadow-gold/30 hover:cursor-pointer">
                   Start Predicting
-                </button>
-                <button className="rounded-full border border-gold px-6 py-3 text-sm font-semibold text-darkText">
+                </button></Link>
+                <Link to='/dashboard'><button className="rounded-full border border-gold px-6 py-3 text-sm font-semibold text-darkText hover:cursor-pointer">
                   View Live Charts
-                </button>
+                </button></Link>
               </div>
             </div>
 

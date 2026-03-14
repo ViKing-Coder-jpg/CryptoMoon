@@ -323,24 +323,7 @@ export default function Predictions() {
         </div>
       </div>
 
-      <div className="border-t border-black/10">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col gap-4 py-4 text-xs uppercase tracking-[0.2em] text-gray-500 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-base">🛡</span>
-              CRYPTOMOON SECURE AI V2.4
-            </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <span>PRIVACY POLICY</span>
-              <span>TERMS OF FORECAST</span>
-              <span>API ACCESS</span>
-            </div>
-            <div className="text-[11px] normal-case text-gray-500">
-              © 2023 CryptoMoon AI Fintech. All predictions are probabilistic models.
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </main>
   )
 }
