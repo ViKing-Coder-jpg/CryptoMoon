@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 const links = [
   { label: 'Home', to: '/' },
   { label: 'Predictions', to: '/predictions' },
-  { label: 'About', to: '/about' },
   { label: 'Dashboard', to: '/dashboard' },
+  { label: 'About', to: '/about' },
 ]
 
 export function Navbar() {
