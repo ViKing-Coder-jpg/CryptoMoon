@@ -1,42 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #FFCC00;
-  --color-primary-hover: #E6B800;
-  --color-dark-gray: #1A1A1A;
-  --color-muted-gray: #6B7280;
-  --bg-subtle: #F9FAFB;
-
-  --radius-xl: 32px;
-  --radius-lg: 24px;
+  --color-gold: #F0B429;
+  --color-cream: #F5F2EB;
+  --color-darkText: #111111;
+  --font-display: "Fraunces", serif;
+  --font-body: "DM Sans", sans-serif;
 }
 
 @layer base {
-  :root {
-    --bg-main: #FFFFFF;
-    --card-bg: #FFFFFF;
-    --text-main: #1A1A1A;
-    --text-muted: #6B7280;
-    --border-main: #F3F4F6;
-  }
-
-  .dark {
-    --bg-main: #0B0F1A;
-    --card-bg: #1C2533;
-    --text-main: #FFFFFF;
-    --text-muted: #9CA3AF;
-    --border-main: rgba(255, 255, 255, 0.05);
-  }
-
   body {
-    @apply font-sans antialiased transition-colors duration-300;
-    background-color: var(--bg-main);
-    color: var(--text-main);
+    @apply bg-cream font-body text-darkText;
   }
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
-:root {
-  font-family: 'Outfit', sans-serif;
 }

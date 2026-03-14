@@ -1,41 +1,52 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Sun, Moon } from 'lucide-react';
+import { NavLink } from 'react-router-dom'
 
-const Navbar = ({ isDark, toggleTheme }) => {
-    return (
-        <header className="h-20 flex items-center justify-between px-10 bg-white/80 dark:bg-dark-gray/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 dark:border-white/5 transition-colors duration-300">
-            <div className="flex items-center gap-3">
-                <div className="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-black text-2xl shadow-lg shadow-primary/30">
-                    B
-                </div>
-                <div className="flex flex-col leading-tight">
-                    <strong className="text-xl tracking-tight text-dark-gray dark:text-white">CryptoMoon</strong>
-                    <span className="text-[10px] tracking-[2px] text-muted-gray uppercase dark:text-gray-400">Luxury AI Fintech</span>
-                </div>
+const links = [
+  { label: 'Home', to: '/' },
+  { label: 'Predictions', to: '/predictions' },
+  { label: 'About', to: '/about' },
+  { label: 'Dashboard', to: '/dashboard' },
+]
+
+export function Navbar() {
+  return (
+    <nav className="sticky top-0 z-50 border-b border-black/5 bg-cream/90 backdrop-blur">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-center justify-between py-4">
+          <div className="flex items-center gap-2 font-bold tracking-[0.16em]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold text-sm font-black text-darkText shadow-[0_8px_16px_rgba(240,180,41,0.35)]">
+              B
             </div>
+            <span className="text-[13px]">CRYPTOMOON</span>
+          </div>
 
-            <nav className="flex gap-8">
-                <NavLink to="/" className={({ isActive }) => `text-sm font-medium transition-opacity hover:opacity-70 ${isActive ? 'text-dark-gray dark:text-white' : 'text-muted-gray dark:text-gray-400'}`}>Home</NavLink>
-                <NavLink to="/predictions" className={({ isActive }) => `text-sm font-medium transition-opacity hover:opacity-70 ${isActive ? 'text-dark-gray dark:text-white' : 'text-muted-gray dark:text-gray-400'}`}>Predictions</NavLink>
-                <NavLink to="/about" className="text-sm font-medium text-muted-gray dark:text-gray-400 hover:opacity-70">About</NavLink>
-                <NavLink to="/dashboard" className="text-sm font-medium text-muted-gray dark:text-gray-400 hover:opacity-70">Dashboard</NavLink>
-            </nav>
+          <div className="hidden items-center gap-7 text-[15px] font-medium text-gray-600 md:flex">
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `border-b-2 pb-1 transition ${
+                    isActive
+                      ? 'border-gold text-darkText'
+                      : 'border-transparent text-gray-600 hover:text-darkText'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </div>
 
-            <div className="flex items-center gap-5">
-                <button
-                    onClick={toggleTheme}
-                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors text-dark-gray dark:text-white"
-                >
-                    {isDark ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-                <button className="text-sm font-medium text-dark-gray dark:text-white hover:opacity-70">Sign In</button>
-                <button className="bg-primary text-dark-gray px-6 py-2 rounded-full font-bold text-sm shadow-md hover:scale-[1.02] transition-transform">
-                    Get Started
-                </button>
-            </div>
-        </header>
-    );
-};
-
-export default Navbar;
+          <div className="flex items-center gap-4 text-sm font-semibold">
+            <NavLink to="/" className="text-darkText hover:text-gray-600">
+              Sign In
+            </NavLink>
+            <button className="rounded-full bg-gold px-5 py-2.5 text-darkText shadow-[0_12px_24px_rgba(240,180,41,0.35)]">
+              Get Started
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  )
+}
