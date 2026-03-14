@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { FiBarChart2, FiBell, FiClock, FiShare2 } from 'react-icons/fi'
 
 const timeframes = ['1H', '4H', '1D', '1W', 'ALL']
 const tabs = ['Price', 'Depth']
@@ -42,7 +43,26 @@ export default function Dashboard() {
 
   const bars = useMemo(
     () => [
-      18, 28, 15, 40, 52, 46, 60, 52, 44, 36, 58, 72, 65, 42, 52, 80, 68, 54, 60, 74,
+      'h-8',
+      'h-12',
+      'h-6',
+      'h-16',
+      'h-20',
+      'h-18',
+      'h-24',
+      'h-20',
+      'h-16',
+      'h-14',
+      'h-20',
+      'h-28',
+      'h-24',
+      'h-16',
+      'h-20',
+      'h-32',
+      'h-26',
+      'h-20',
+      'h-24',
+      'h-28',
     ],
     []
   )
@@ -128,25 +148,16 @@ export default function Dashboard() {
               </div>
 
               <div className="relative mt-6 h-64 w-full rounded-xl bg-[#FEFBF0]">
-                <svg className="h-full w-full" viewBox="0 0 420 240" fill="none">
-                  {bars.map((height, index) => {
-                    const x = 8 + index * 20
-                    const y = 220 - height
-                    const opacity = 0.4 + (index % 5) * 0.1
-                    return (
-                      <rect
-                        key={`bar-${index}`}
-                        x={x}
-                        y={y}
-                        width="12"
-                        height={height}
-                        rx="4"
-                        fill="#F0B429"
-                        opacity={opacity}
-                      />
-                    )
-                  })}
-                </svg>
+                <div className="flex h-full items-end gap-2 px-4 pb-6">
+                  {bars.map((height, index) => (
+                    <div
+                      key={`bar-${height}-${index}`}
+                      className={`w-3 rounded-full bg-[#F0B429] ${height} ${
+                        index % 2 === 0 ? 'opacity-60' : 'opacity-90'
+                      }`}
+                    />
+                  ))}
+                </div>
                 <div className="absolute bottom-4 right-4 rounded-full bg-[#F0B429] px-3 py-1 text-sm font-bold text-darkText">
                   $68,432.10
                 </div>
@@ -176,11 +187,7 @@ export default function Dashboard() {
           <div className="lg:col-span-2 space-y-6">
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <div className="flex items-center gap-2 text-darkText">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M3 3v18h18" />
-                  <path d="M7 14h4v5H7z" />
-                  <path d="M13 9h4v10h-4z" />
-                </svg>
+                <FiBarChart2 className="h-5 w-5" />
                 <span className="text-lg font-bold">Live Order Book</span>
               </div>
 
@@ -237,10 +244,7 @@ export default function Dashboard() {
 
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <div className="flex items-center gap-2 text-darkText">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 7v5l3 3" />
-                </svg>
+                <FiClock className="h-5 w-5" />
                 <span className="text-lg font-bold">Recent Trades</span>
               </div>
 
@@ -315,17 +319,8 @@ export default function Dashboard() {
           <div className="mt-10 flex flex-col gap-4 border-t border-gray-100 pt-6 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
             <span>© 2024 CryptoMoon. All rights reserved.</span>
             <div className="flex items-center gap-4">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="18" cy="5" r="3" />
-                <circle cx="6" cy="12" r="3" />
-                <circle cx="18" cy="19" r="3" />
-                <path d="M8.6 13.5l6.8 3.9" />
-                <path d="M15.4 6.6L8.6 10.5" />
-              </svg>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
+              <FiShare2 className="h-4 w-4" />
+              <FiBell className="h-4 w-4" />
             </div>
           </div>
         </section>

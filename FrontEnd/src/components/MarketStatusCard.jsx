@@ -1,3 +1,16 @@
+const sparkBars = [
+  'h-8',
+  'h-10',
+  'h-14',
+  'h-9',
+  'h-12',
+  'h-16',
+  'h-12',
+  'h-20',
+  'h-24',
+  'h-28',
+]
+
 export function MarketStatusCard({
   label,
   name,
@@ -33,17 +46,16 @@ export function MarketStatusCard({
       </div>
 
       <div>
-        <svg className="h-[180px] w-full" viewBox="0 0 420 180" fill="none">
-          <path
-            d="M20 150 C80 120, 120 80, 170 95 C220 110, 250 140, 290 130 C330 120, 360 70, 400 40 L400 180 L20 180 Z"
-            fill="rgba(240, 180, 41, 0.15)"
-          />
-          <path
-            d="M20 150 C80 120, 120 80, 170 95 C220 110, 250 140, 290 130 C330 120, 360 70, 400 40"
-            stroke="#F0B429"
-            strokeWidth="4"
-          />
-        </svg>
+        <div className="flex h-[180px] items-end justify-between gap-1 rounded-xl bg-[#FEFBF0] px-3 pb-6">
+          {sparkBars.map((height, index) => (
+            <div
+              key={`spark-${height}-${index}`}
+              className={`w-3 rounded-full bg-[#F0B429] ${height} ${
+                index % 2 === 0 ? 'opacity-60' : 'opacity-90'
+              }`}
+            />
+          ))}
+        </div>
         <div className="mt-2 flex justify-between text-[12px] text-yellow-700/70">
           {times.map((time) => (
             <span key={time}>{time}</span>

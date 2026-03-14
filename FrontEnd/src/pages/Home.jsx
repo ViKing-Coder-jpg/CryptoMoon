@@ -1,26 +1,26 @@
+import { FiActivity, FiBarChart2, FiTrendingUp, FiZap } from 'react-icons/fi'
 import { MarketStatusCard } from '../components/MarketStatusCard.jsx'
-import {Link} from 'react-router-dom'
 
 const features = [
   {
     title: 'AI Predictions',
     description: 'Deep learning models processing 200+ on-chain metrics hourly.',
-    icon: <path d="M12 3v6l4 2" />,
+    icon: FiZap,
   },
   {
     title: 'Real-Time Data',
     description: 'Low-latency data streams from top global exchanges.',
-    icon: <path d="M3 12h18" />,
+    icon: FiActivity,
   },
   {
     title: 'Indicator Insights',
     description: 'Proprietary technical signals refined by algorithmic history.',
-    icon: <path d="M4 16l4-5 5 4 7-9" />,
+    icon: FiTrendingUp,
   },
   {
     title: 'Historical Analysis',
     description: 'Backtested performance reports across multiple bull cycles.',
-    icon: <path d="M5 5h14v14H5z" />,
+    icon: FiBarChart2,
   },
 ]
 
@@ -42,12 +42,12 @@ export function Home() {
                 Harness the power of neural networks for institutional-grade Bitcoin price forecasting. Real-time analytics for the modern digital asset explorer.
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
-                <Link to='/predictions'><button className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-darkText shadow-lg shadow-gold/30 hover:cursor-pointer">
+                <button className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-darkText shadow-lg shadow-gold/30">
                   Start Predicting
-                </button></Link>
-                <Link to='/dashboard'><button className="rounded-full border border-gold px-6 py-3 text-sm font-semibold text-darkText hover:cursor-pointer">
+                </button>
+                <button className="rounded-full border border-gold px-6 py-3 text-sm font-semibold text-darkText">
                   View Live Charts
-                </button></Link>
+                </button>
               </div>
             </div>
 
@@ -69,18 +69,18 @@ export function Home() {
           <p className="mt-2 text-gray-600">Advanced analytical tools for high-precision decision making.</p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => (
-              <div key={feature.title} className="rounded-2xl bg-white p-6 shadow-sm">
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-cream text-gold">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    {feature.icon}
-                    <circle cx="12" cy="12" r="9" />
-                  </svg>
+            {features.map((feature) => {
+              const Icon = feature.icon
+              return (
+                <div key={feature.title} className="rounded-2xl bg-white p-6 shadow-sm">
+                  <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-cream text-gold">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-lg font-bold text-darkText">{feature.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600">{feature.description}</p>
                 </div>
-                <h3 className="text-lg font-bold text-darkText">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{feature.description}</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { FiSettings, FiSliders } from 'react-icons/fi'
 
 const monthNames = [
   'January',
@@ -109,20 +110,10 @@ export default function Predictions() {
             <div className="rounded-2xl bg-white p-6 shadow-md">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-darkText">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 6h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 18h16" />
-                    <circle cx="8" cy="6" r="2" />
-                    <circle cx="16" cy="12" r="2" />
-                    <circle cx="10" cy="18" r="2" />
-                  </svg>
+                  <FiSliders className="h-5 w-5" />
                   <span className="text-lg font-bold">Prediction Parameters</span>
                 </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .67.39 1.27 1 1.51.26.11.54.17.83.17H21a2 2 0 1 1 0 4h-.09c-.29 0-.57.06-.83.17-.61.24-1 .84-1 1.51Z" />
-                </svg>
+                <FiSettings className="h-5 w-5 text-gray-400" />
               </div>
 
               <div className="mt-6">
@@ -323,7 +314,24 @@ export default function Predictions() {
         </div>
       </div>
 
-      
+      <div className="border-t border-black/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col gap-4 py-4 text-xs uppercase tracking-[0.2em] text-gray-500 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-base">🛡</span>
+              CRYPTOMOON SECURE AI V2.4
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <span>PRIVACY POLICY</span>
+              <span>TERMS OF FORECAST</span>
+              <span>API ACCESS</span>
+            </div>
+            <div className="text-[11px] normal-case text-gray-500">
+              © 2023 CryptoMoon AI Fintech. All predictions are probabilistic models.
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }
