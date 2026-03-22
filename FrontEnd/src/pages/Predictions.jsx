@@ -20,9 +20,8 @@ const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 export default function Predictions() {
   const [activeTimeframe, setActiveTimeframe] = useState('1D')
-  const [smaEnabled, setSmaEnabled] = useState(true)
-  const [rsiEnabled, setRsiEnabled] = useState(false)
-  const [macdEnabled, setMacdEnabled] = useState(false)
+  const [xgb, setXgb] = useState(true)
+  const [lstm, setLstm] = useState(false)
   const [currentMonth, setCurrentMonth] = useState(9)
   const [currentYear, setCurrentYear] = useState(2023)
   const [selectedDate, setSelectedDate] = useState(5)
@@ -73,23 +72,20 @@ export default function Predictions() {
     setCurrentMonth((prev) => prev + 1)
   }
 
-  const timeframeOptions = ['1D', '7D', '30D']
 
   const indicators = [
     {
-      label: 'Moving Average (SMA)',
-      enabled: smaEnabled,
-      toggle: () => setSmaEnabled((prev) => !prev),
+      label: 'Model 1 (XGBoost)',
+      enabled: xgb,
+      toggle: () => {setXgb((prev) => !prev) 
+        setLstm(false)},
     },
     {
-      label: 'Relative Strength (RSI)',
-      enabled: rsiEnabled,
-      toggle: () => setRsiEnabled((prev) => !prev),
-    },
-    {
-      label: 'MACD Convergence',
-      enabled: macdEnabled,
-      toggle: () => setMacdEnabled((prev) => !prev),
+      label: 'Model 2 (LSTM)',
+      enabled: lstm,
+      toggle: () => {setLstm((prev) => !prev)
+        setXgb(false)
+      },
     },
   ]
 
@@ -117,30 +113,7 @@ export default function Predictions() {
               </div>
 
               <div className="mt-6">
-                <p className="text-xs font-semibold tracking-[0.18em] text-gray-500">FORECASTING TIMEFRAME</p>
-                <div className="mt-3 flex gap-3">
-                  {timeframeOptions.map((option) => {
-                    const isActive = option === activeTimeframe
-                    return (
-                      <button
-                        key={option}
-                        type="button"
-                        onClick={() => setActiveTimeframe(option)}
-                        className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                          isActive
-                            ? 'border-[#F0B429] text-[#F0B429]'
-                            : 'border-gray-200 text-gray-700 hover:border-gray-300'
-                        }`}
-                      >
-                        {option}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <p className="text-xs font-semibold tracking-[0.18em] text-gray-500">TECHNICAL INDICATORS</p>
+                <p className="text-xs font-semibold tracking-[0.18em] text-gray-500">MODEL SELECTION</p>
                 <div className="mt-3 space-y-3">
                   {indicators.map((indicator) => (
                     <div key={indicator.label} className="flex items-center justify-between rounded-full bg-[#FBFBFB] px-4 py-3">
