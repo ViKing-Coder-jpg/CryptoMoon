@@ -21,7 +21,9 @@ def predict_xgb(date: str):
     return {
         "date":date,
         "model":"xgb",
-        "prediction":float(prediction[0])*100
+        "prediction_return":float(prediction[0])*100,
+        "prediction_price":(1+float(prediction[0]))*btc["Close"].iloc[-1]
+        
     }
 
 def predict_lstm(date: str):

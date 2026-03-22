@@ -1,15 +1,9 @@
 from fastapi import APIRouter
-from Controllers.useModel import predict_xgb, predict_lstm
+from Controllers.dashboard import get_candles
 
 router = APIRouter()
 
-@router.get("/predict")
-async def predict_route(date: str, model_use: str):
-    if model_use == "xgb":
-        result = predict_xgb(date)
-    elif model_use == "lstm":
-        result = predict_lstm(date)
-    else:
-        return {"error": "Invalid model_use. Choose 'xgb' or 'lstm'"}
-    
+@router.get("/btc-candles")
+async def predict_route():
+    result = get_candles()
     return result

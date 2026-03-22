@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { FiBarChart2, FiBell, FiClock, FiShare2 } from 'react-icons/fi'
+import BTCCandleChart from '../components/Charts'
 
-const timeframes = ['1H', '4H', '1D', '1W', 'ALL']
+const timeframes = ['1D', '1W', '1M', '5M', '1Y', '5Y']
 const tabs = ['Price', 'Depth']
 
 const initialTrades = [
@@ -115,11 +116,10 @@ export default function Dashboard() {
                         key={tab}
                         type="button"
                         onClick={() => setActiveTab(tab)}
-                        className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                          isActive
-                            ? 'bg-white text-darkText shadow-sm'
-                            : 'text-gray-500 hover:text-darkText'
-                        }`}
+                        className={`rounded-full px-4 py-2 text-sm font-semibold transition ${isActive
+                          ? 'bg-white text-darkText shadow-sm'
+                          : 'text-gray-500 hover:text-darkText'
+                          }`}
                       >
                         {tab}
                       </button>
@@ -134,11 +134,10 @@ export default function Dashboard() {
                         key={frame}
                         type="button"
                         onClick={() => setActiveTimeframe(frame)}
-                        className={`rounded-full px-3 py-1 transition ${
-                          isActive
-                            ? 'bg-darkText text-white'
-                            : 'text-gray-500 hover:text-darkText'
-                        }`}
+                        className={`rounded-full px-3 py-1 transition ${isActive
+                          ? 'bg-darkText text-white'
+                          : 'text-gray-500 hover:text-darkText'
+                          }`}
                       >
                         {frame}
                       </button>
@@ -152,9 +151,8 @@ export default function Dashboard() {
                   {bars.map((height, index) => (
                     <div
                       key={`bar-${height}-${index}`}
-                      className={`w-3 rounded-full bg-[#F0B429] ${height} ${
-                        index % 2 === 0 ? 'opacity-60' : 'opacity-90'
-                      }`}
+                      className={`w-3 rounded-full bg-[#F0B429] ${height} ${index % 2 === 0 ? 'opacity-60' : 'opacity-90'
+                        }`}
                     />
                   ))}
                 </div>
@@ -263,67 +261,9 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section className="mt-10">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-gray-100 bg-white px-6 py-6 shadow-sm md:flex-row md:items-center md:px-8">
-            <div>
-              <h3 className="text-xl font-bold text-darkText">Institutional Grade Trading</h3>
-              <p className="mt-2 text-sm text-gray-500">
-                Unlock advanced features including API access, lower fees, and priority support.
-              </p>
-            </div>
-            <button className="rounded-full bg-[#F0B429] px-8 py-3 text-sm font-bold text-darkText">
-              Upgrade to Pro
-            </button>
-          </div>
-        </section>
 
-        <section className="mt-12 rounded-2xl border border-gray-100 bg-white px-6 py-10 shadow-sm">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <div className="flex items-center gap-2 font-bold text-darkText">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F0B429] text-sm font-black text-darkText">
-                  B
-                </div>
-                CryptoMoon
-              </div>
-              <p className="mt-3 text-sm text-gray-500">
-                The world's most luxurious crypto trading platform. Secure, fast, and exclusive.
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F0B429]">Company</p>
-              <div className="mt-3 space-y-2 text-sm text-gray-500">
-                <p>About Us</p>
-                <p>Careers</p>
-                <p>Press</p>
-              </div>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F0B429]">Resources</p>
-              <div className="mt-3 space-y-2 text-sm text-gray-500">
-                <p>Trading Rules</p>
-                <p>API Docs</p>
-                <p>Support</p>
-              </div>
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#F0B429]">Legal</p>
-              <div className="mt-3 space-y-2 text-sm text-gray-500">
-                <p>Privacy Policy</p>
-                <p>Terms of Service</p>
-                <p>Security</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="mt-10 flex flex-col gap-4 border-t border-gray-100 pt-6 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
-            <span>© 2024 CryptoMoon. All rights reserved.</span>
-            <div className="flex items-center gap-4">
-              <FiShare2 className="h-4 w-4" />
-              <FiBell className="h-4 w-4" />
-            </div>
-          </div>
-        </section>
+
       </div>
     </main>
   )

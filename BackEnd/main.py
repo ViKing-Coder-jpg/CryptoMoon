@@ -1,19 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from Routes.predict import router
-from Routes.show_btc import router
+from Routes.predict import router as predict_router
+from Routes.show_btc import router as btc_router
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(router)
+app.include_router(predict_router)
+app.include_router(btc_router)
 
 
 if __name__ == "__main__":
