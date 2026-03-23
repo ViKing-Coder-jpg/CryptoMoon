@@ -5,10 +5,12 @@ export function Footer() {
     <footer className="border-t border-black/5 bg-cream">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid items-center gap-6 py-8 text-center text-sm text-gray-600 md:grid-cols-[1fr_2fr_1fr] md:text-left">
-          <div className="flex items-center justify-center gap-2 font-bold tracking-[0.16em] md:justify-start">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold text-[12px] font-black text-darkText">
-              B
-            </div>
+          <div className="flex items-center justify-center gap-3 font-bold tracking-[0.16em] md:justify-start">
+            <img
+              src="/src/assets/cryptomoon-logo.png"
+              alt="CryptoMoon logo"
+              className="h-11 w-11 object-contain"
+            />
             <span className="text-[13px]">CRYPTOMOON</span>
           </div>
           <div className="text-center">© 2024 CryptoMoon Predictive Labs. All rights reserved.</div>

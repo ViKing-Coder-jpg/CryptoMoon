@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { FiSettings, FiSliders } from 'react-icons/fi'
 import { api } from '../../functions'
 import BTCCandleChart from '../components/Charts'
+import { useTitle } from '../hooks/useTitle.js'
 
 const monthNames = [
   'January',
@@ -20,7 +21,9 @@ const monthNames = [
 
 const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
+
 export default function Predictions() {
+  useTitle('Predictions')
   const [xgb, setXgb] = useState(true)
   const [lstm, setLstm] = useState(false)
   const [currentMonth, setCurrentMonth] = useState(() => new Date().getMonth())

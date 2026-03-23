@@ -1,6 +1,7 @@
 import burstImage from '../assets/about-burst.svg'
 // Developer image will be used below
-import developerAvatar from '../assets/team-1.svg' // Using team-1.svg as a placeholder for now
+import developerAvatar from '../assets/Avatar.png' // Using team-1.svg as a placeholder for now
+import { useTitle } from '../hooks/useTitle.js'
 
 const coreTechnology = [
   {
@@ -44,7 +45,9 @@ const coreTechnology = [
 
 
 
+
 export function About() {
+  useTitle('About')
   return (
     <main className="bg-cream text-darkText">
       <section className="px-6 pb-20 pt-16">
@@ -140,7 +143,7 @@ export function About() {
               <p className="text-xl md:text-2xl leading-relaxed text-gray-700 font-medium italic relative z-10">
                 I design and build end-to-end digital products with a focus on performance,
                 accessibility, and real-world impact. CryptoMoon is a reflection of my
-                belief that technology should feel human, warm, and intentional.
+                belief that technology enhanced with AI should help humans to reach new heights.
               </p>
               <div className="absolute -bottom-10 -right-10 text-9xl text-gold/10 font-serif leading-none">”</div>
             </div>

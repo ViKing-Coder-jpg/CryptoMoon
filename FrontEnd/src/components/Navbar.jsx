@@ -12,10 +12,12 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-black/5 bg-cream/90 backdrop-blur">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-2 font-bold tracking-[0.16em]">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold text-sm font-black text-darkText shadow-[0_8px_16px_rgba(240,180,41,0.35)]">
-              B
-            </div>
+          <div className="flex items-center gap-3 font-bold tracking-[0.16em]">
+            <img
+              src="/src/assets/cryptomoon-logo.png"
+              alt="CryptoMoon logo"
+              className="h-12 w-12 object-contain"
+            />
             <span className="text-[13px]">CRYPTOMOON</span>
           </div>
 

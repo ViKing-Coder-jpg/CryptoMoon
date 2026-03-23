@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { FiBarChart2, FiShare2 } from 'react-icons/fi'
 import BTCCandleChart from '../components/Charts'
 import { api } from '../../functions'
+import { useTitle } from '../hooks/useTitle.js'
 
 const timeframes = ['1d', '5d', '1mo', '6mo', '1y', '5y', '10y']
 const tabs = ['Price', 'Depth']
 
+
 export default function Dashboard() {
+  useTitle('Dashboard')
   const [activeTab, setActiveTab] = useState('Price')
   const [activeTimeframe, setActiveTimeframe] = useState('1d')
   const [liveData, setLiveData] = useState(null)
@@ -15,13 +18,13 @@ export default function Dashboard() {
     const fetchLive = () => {
       api.get('/btc-live').then(res => setLiveData(res.data))
     }
-    
+
     // Fetch immediately on mount
     fetchLive()
-    
+
     // Then fetch every 3 seconds to keep it live
     const interval = setInterval(fetchLive, 3000)
-    
+
     return () => clearInterval(interval)
   }, [])
 
