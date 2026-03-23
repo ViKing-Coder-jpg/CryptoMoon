@@ -84,20 +84,6 @@ export function Home() {
           </div>
         </div>
       </section>
-
-      <section>
-        <div className="max-w-7xl mx-auto px-6">
-          <MarketStatusCard
-            label="LIVE MARKET STATUS"
-            name="Bitcoin (BTC)"
-            price="$68,432.10"
-            change="+3.24%"
-            low="$66,120"
-            high="$69,500"
-            times={["00:00", "06:00", "12:00", "18:00", "24:00"]}
-          />
-        </div>
-      </section>
     </main>
   )
 }

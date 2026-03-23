@@ -1,75 +1,48 @@
-import { useEffect, useMemo, useState } from 'react'
-import { FiBarChart2, FiBell, FiClock, FiShare2 } from 'react-icons/fi'
+import { useEffect, useState } from 'react'
+import { FiBarChart2, FiShare2 } from 'react-icons/fi'
 import BTCCandleChart from '../components/Charts'
+import { api } from '../../functions'
 
-const timeframes = ['1D', '1W', '1M', '5M', '1Y', '5Y']
+const timeframes = ['1d', '5d', '1mo', '6mo', '1y', '5y', '10y']
 const tabs = ['Price', 'Depth']
-
-const initialTrades = [
-  { price: 68432.1, amount: 0.025, time: '12:44:02', side: 'buy' },
-  { price: 68431.5, amount: 1.0, time: '12:43:58', side: 'sell' },
-  { price: 68432.0, amount: 0.142, time: '12:43:55', side: 'buy' },
-  { price: 68431.9, amount: 0.5, time: '12:43:51', side: 'sell' },
-  { price: 68431.0, amount: 0.005, time: '12:43:48', side: 'sell' },
-]
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('Price')
-  const [activeTimeframe, setActiveTimeframe] = useState('1D')
-  const [trades, setTrades] = useState(initialTrades)
+  const [activeTimeframe, setActiveTimeframe] = useState('1d')
+  const [liveData, setLiveData] = useState(null)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const price = 68432 + (Math.random() - 0.5) * 8
-      const amount = Math.random() * 1.5 + 0.01
-      const side = Math.random() > 0.5 ? 'buy' : 'sell'
-      const time = new Date().toLocaleTimeString()
-
-      setTrades((prev) => {
-        const next = [
-          {
-            price: Number(price.toFixed(2)),
-            amount: Number(amount.toFixed(3)),
-            time,
-            side,
-          },
-          ...prev,
-        ]
-        return next.slice(0, 5)
-      })
-    }, 3000)
-
+    const fetchLive = () => {
+      api.get('/btc-live').then(res => setLiveData(res.data))
+    }
+    
+    // Fetch immediately on mount
+    fetchLive()
+    
+    // Then fetch every 3 seconds to keep it live
+    const interval = setInterval(fetchLive, 3000)
+    
     return () => clearInterval(interval)
   }, [])
 
-  const bars = useMemo(
-    () => [
-      'h-8',
-      'h-12',
-      'h-6',
-      'h-16',
-      'h-20',
-      'h-18',
-      'h-24',
-      'h-20',
-      'h-16',
-      'h-14',
-      'h-20',
-      'h-28',
-      'h-24',
-      'h-16',
-      'h-20',
-      'h-32',
-      'h-26',
-      'h-20',
-      'h-24',
-      'h-28',
-    ],
-    []
-  )
+
+  const getChartParams = (tf) => {
+    switch (tf) {
+      case '1d': return { period: '1d', interval: '1h' }
+      case '5d': return { period: '5d', interval: '6h' }
+      case '1mo': return { period: '1mo', interval: '1d' }
+      case '6mo': return { period: '6mo', interval: '1d' }
+      case '1y': return { period: '1y', interval: '1d' }
+      case '5y': return { period: '5y', interval: '1wk' }
+      case '10y': return { period: '10y', interval: '1mo' }
+      default: return { period: '90d', interval: '1d' }
+    }
+  }
+
+  const chartParams = getChartParams(activeTimeframe)
 
   return (
-    <main className="min-h-screen bg-[#F5F2EB]">
+    <main className="min-h-[80vh] bg-[#F5F2EB]">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <section className="space-y-4">
           <div className="inline-flex items-center gap-3 rounded-full border border-gray-200 px-4 py-2 text-sm text-gray-600">
@@ -83,14 +56,16 @@ export default function Dashboard() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <div className="font-display text-5xl font-black text-darkText sm:text-6xl">
-                $68,432.10
+                {liveData ? `$${liveData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : 'Loading...'}
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center gap-2 rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-600">
-                  <span>↗</span>
-                  +4.25%
+                <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${liveData?.change_24h_pct >= 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                  <span>{liveData?.change_24h_pct >= 0 ? '↗' : '↘'}</span>
+                  {liveData ? `${liveData.change_24h_pct >= 0 ? '+' : ''}${liveData.change_24h_pct.toFixed(2)}%` : '—'}
                 </span>
-                <span className="text-sm text-gray-500">+$2,790.45 (24h)</span>
+                <span className="text-sm text-gray-500">
+                  {liveData ? `${liveData.change_24h_usd >= 0 ? '+' : ''}$${Math.abs(liveData.change_24h_usd).toLocaleString(undefined, { minimumFractionDigits: 2 })} (24h)` : '—'}
+                </span>
               </div>
             </div>
             <div className="flex flex-wrap gap-4">
@@ -146,33 +121,31 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="relative mt-6 h-64 w-full rounded-xl bg-[#FEFBF0]">
-                <div className="flex h-full items-end gap-2 px-4 pb-6">
-                  {bars.map((height, index) => (
-                    <div
-                      key={`bar-${height}-${index}`}
-                      className={`w-3 rounded-full bg-[#F0B429] ${height} ${index % 2 === 0 ? 'opacity-60' : 'opacity-90'
-                        }`}
-                    />
-                  ))}
-                </div>
-                <div className="absolute bottom-4 right-4 rounded-full bg-[#F0B429] px-3 py-1 text-sm font-bold text-darkText">
-                  $68,432.10
+              <div className="relative mt-6 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                <div className="rounded-xl overflow-hidden bg-gradient-to-br from-[#1b1b1b] via-[#2c2c2c] to-[#111111]">
+                  {/* passing timeframe parameters to Chart */}
+                  <BTCCandleChart period={chartParams.period} interval={chartParams.interval} />
                 </div>
               </div>
 
               <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">24H HIGH / LOW</p>
-                  <p className="mt-2 text-sm font-bold text-darkText">$69,120 / $67,540</p>
+                  <p className="mt-2 text-sm font-bold text-darkText">
+                    {liveData ? `$${liveData.high_24h.toLocaleString()} / $${liveData.low_24h.toLocaleString()}` : '—'}
+                  </p>
                 </div>
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">MARKET CAP</p>
-                  <p className="mt-2 text-sm font-bold text-darkText">$1.34T</p>
+                  <p className="mt-2 text-sm font-bold text-darkText">
+                    {liveData ? `$${(liveData.price * 19.7 / 1e6).toFixed(2)}T` : '—'}
+                  </p>
                 </div>
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">VOLUME (24H)</p>
-                  <p className="mt-2 text-sm font-bold text-darkText">$34.2B</p>
+                  <p className="mt-2 text-sm font-bold text-darkText">
+                    {liveData ? `$${(liveData.volume_24h / 1e9).toFixed(2)}B` : '—'}
+                  </p>
                 </div>
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">CIRCULATING SUPPLY</p>
@@ -239,32 +212,10 @@ export default function Dashboard() {
                 ))}
               </div>
             </div>
-
-            <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-              <div className="flex items-center gap-2 text-darkText">
-                <FiClock className="h-5 w-5" />
-                <span className="text-lg font-bold">Recent Trades</span>
-              </div>
-
-              <div className="mt-4 space-y-3 text-sm">
-                {trades.map((trade, index) => (
-                  <div key={`${trade.time}-${index}`} className="grid grid-cols-3 items-center gap-2">
-                    <span className={trade.side === 'buy' ? 'text-emerald-600' : 'text-red-400'}>
-                      {trade.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                    </span>
-                    <span className="text-center text-darkText">{trade.amount.toFixed(3)} BTC</span>
-                    <span className="text-right text-xs text-gray-400">{trade.time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
-
-
-
-
       </div>
     </main>
   )
 }
+

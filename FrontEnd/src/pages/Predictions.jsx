@@ -279,7 +279,7 @@ export default function Predictions() {
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <h2 className="text-xl font-bold text-darkText">AI Prediction Results</h2>
-                  <p className="text-sm text-gray-500">BTC/USD Market Projection (90)</p>
+                  <p className="text-sm text-gray-500">BTC/USD Market Projection (90 days)</p>
                 </div>
                 <div className="flex items-center gap-3">
                   {predictedInsights && (

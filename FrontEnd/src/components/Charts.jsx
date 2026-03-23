@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createChart, CandlestickSeries } from 'lightweight-charts';
 import { api } from '../../functions';
 
-const BTCCandleChart = () => {
+const BTCCandleChart = ({ period = '90d', interval = '1d' }) => {
     const chartRef = useRef(null);
 
     useEffect(() => {
@@ -27,13 +27,14 @@ const BTCCandleChart = () => {
             wickDownColor: '#ef5350',
         });
 
-        api.get('/btc-candles')
+
+        api.get(`/btc-candles?period=${period}&interval=${interval}`)
             .then(res => candleSeries.setData(res.data));
 
         return () => {
             chart.remove();
         };
-    }, []);
+    }, [period, interval]);
 
     return <div ref={chartRef} style={{ width: '100%' }} />;
 };
