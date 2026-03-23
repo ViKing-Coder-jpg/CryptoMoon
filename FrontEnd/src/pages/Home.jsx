@@ -26,23 +26,21 @@ const features = [
     icon: FiBarChart2,
   },
 ]
-const [liveData, setLiveData] = useState(null)
-
-useEffect(() => {
-  const fetchLive = () => {
-    api.get('/btc-live')
-      .then(res => setLiveData(res.data))
-      .catch(err => console.error('Error fetching live data:', err))
-  }
-
-  fetchLive()
-  const interval = setInterval(fetchLive, 3000)
-  return () => clearInterval(interval)
-}, [])
-
-
 export function Home() {
   useTitle('Home')
+  const [liveData, setLiveData] = useState(null)
+
+  useEffect(() => {
+    const fetchLive = () => {
+      api.get('/btc-live')
+        .then(res => setLiveData(res.data))
+        .catch(err => console.error('Error fetching live data:', err))
+    }
+
+    fetchLive()
+    const interval = setInterval(fetchLive, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <main className="space-y-20 pb-20">

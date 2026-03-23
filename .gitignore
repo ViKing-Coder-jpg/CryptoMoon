@@ -1,1 +1,11 @@
-/.vscode
+.vscode/
+.DS_Store
+node_modules/
+__pycache__/
+venv/
+*.pyc
+dist/
+build/
+FrontEnd/dist/
+BackEnd/venv/
+.env
