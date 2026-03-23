@@ -1,3 +1,4 @@
+import os
 import joblib
 import numpy as np
 import pandas as pd
@@ -5,8 +6,13 @@ import yfinance as yf
 from datetime import datetime, timedelta
 from Controllers.feature_creation import feature_conversion
 
-xgb_model=joblib.load("Model/XGBoost_model.joblib")
-feature_names=joblib.load("Model/feature_names.joblib")
+# Define paths relative to this file
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "Model", "XGBoost_model.joblib")
+FEATURES_PATH = os.path.join(BASE_DIR, "Model", "feature_names.joblib")
+
+xgb_model = joblib.load(MODEL_PATH)
+feature_names = joblib.load(FEATURES_PATH)
 
 
 def predict_xgb(date: str):
