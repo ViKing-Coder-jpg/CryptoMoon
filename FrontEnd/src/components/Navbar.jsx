@@ -1,4 +1,5 @@
 import { NavLink ,Link} from 'react-router-dom'
+import logo from '../assets/cryptomoon-logo.png'
 
 const links = [
   { label: 'Home', to: '/' },
@@ -14,7 +15,7 @@ export function Navbar() {
         <div className="flex items-center justify-between py-4">
           <div className="flex items-center gap-3 font-bold tracking-[0.16em]">
             <img
-              src="/src/assets/cryptomoon-logo.png"
+              src={logo}
               alt="CryptoMoon logo"
               className="h-12 w-12 object-contain"
             />

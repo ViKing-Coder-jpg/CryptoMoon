@@ -1,4 +1,5 @@
 import { FiGlobe, FiMail, FiShare2 } from 'react-icons/fi'
+import logo from '../assets/cryptomoon-logo.png'
 
 export function Footer() {
   return (
@@ -7,7 +8,7 @@ export function Footer() {
         <div className="grid items-center gap-6 py-8 text-center text-sm text-gray-600 md:grid-cols-[1fr_2fr_1fr] md:text-left">
           <div className="flex items-center justify-center gap-3 font-bold tracking-[0.16em] md:justify-start">
             <img
-              src="/src/assets/cryptomoon-logo.png"
+              src={logo}
               alt="CryptoMoon logo"
               className="h-11 w-11 object-contain"
             />
