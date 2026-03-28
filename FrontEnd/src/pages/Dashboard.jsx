@@ -59,15 +59,15 @@ export default function Dashboard() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <div className="font-display text-5xl font-black text-darkText sm:text-6xl">
-                {liveData ? `$${liveData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : 'Loading...'}
+                {liveData?.price ? `$${liveData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : 'Loading...'}
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${liveData?.change_24h_pct >= 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                   <span>{liveData?.change_24h_pct >= 0 ? '↗' : '↘'}</span>
-                  {liveData ? `${liveData.change_24h_pct >= 0 ? '+' : ''}${liveData.change_24h_pct.toFixed(2)}%` : '—'}
+                  {liveData?.change_24h_pct !== undefined ? `${liveData.change_24h_pct >= 0 ? '+' : ''}${liveData.change_24h_pct.toFixed(2)}%` : '—'}
                 </span>
                 <span className="text-sm text-gray-500">
-                  {liveData ? `${liveData.change_24h_usd >= 0 ? '+' : ''}$${Math.abs(liveData.change_24h_usd).toLocaleString(undefined, { minimumFractionDigits: 2 })} (24h)` : '—'}
+                  {liveData?.change_24h_usd !== undefined ? `${liveData.change_24h_usd >= 0 ? '+' : ''}$${Math.abs(liveData.change_24h_usd).toLocaleString(undefined, { minimumFractionDigits: 2 })} (24h)` : '—'}
                 </span>
               </div>
             </div>
@@ -135,19 +135,19 @@ export default function Dashboard() {
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">24H HIGH / LOW</p>
                   <p className="mt-2 text-sm font-bold text-darkText">
-                    {liveData ? `$${liveData.high_24h.toLocaleString()} / $${liveData.low_24h.toLocaleString()}` : '—'}
+                    {liveData?.high_24h !== undefined ? `$${liveData.high_24h.toLocaleString()} / $${liveData.low_24h.toLocaleString()}` : '—'}
                   </p>
                 </div>
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">MARKET CAP</p>
                   <p className="mt-2 text-sm font-bold text-darkText">
-                    {liveData ? `$${(liveData.price * 19.7 / 1e6).toFixed(2)}T` : '—'}
+                    {liveData?.price ? `$${(liveData.price * 19.7 / 1e6).toFixed(2)}T` : '—'}
                   </p>
                 </div>
                 <div className="rounded-xl border border-gray-100 bg-white p-4">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">VOLUME (24H)</p>
                   <p className="mt-2 text-sm font-bold text-darkText">
-                    {liveData ? `$${(liveData.volume_24h / 1e9).toFixed(2)}B` : '—'}
+                    {liveData?.volume_24h !== undefined ? `$${(liveData.volume_24h / 1e9).toFixed(2)}B` : '—'}
                   </p>
                 </div>
                 <div className="rounded-xl border border-gray-100 bg-white p-4">

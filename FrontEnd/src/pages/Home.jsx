@@ -82,10 +82,10 @@ export function Home() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-gray-500">Current BTC Index</p>
                 <div className="mt-4 flex items-end gap-3">
                   <span className="font-display text-4xl font-extrabold text-gold sm:text-5xl">
-                    {liveData ? `$${liveData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : '$68,432.12'}
+                    {liveData?.price ? `$${liveData.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}` : '$68,432.12'}
                   </span>
                   <span className={`text-sm font-semibold ${liveData?.change_24h_pct >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
-                    {liveData ? `${liveData.change_24h_pct >= 0 ? '+' : ''}${liveData.change_24h_pct.toFixed(2)}% Today` : '+4.2% Today'}
+                    {liveData?.change_24h_pct !== undefined ? `${liveData.change_24h_pct >= 0 ? '+' : ''}${liveData.change_24h_pct.toFixed(2)}% Today` : '+4.2% Today'}
                   </span>
                 </div>
               </div>
