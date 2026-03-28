@@ -1,4 +1,6 @@
-# CryptoMoon
+# 🚀 CryptoMoon
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=render)](https://cryptomoon.onrender.com)
+
 
 CryptoMoon is a sophisticated Bitcoin price prediction platform that leverages advanced machine learning models and real-time market data to forecast future price movements. This application provides users with actionable insights, historical analysis, and live market data to help them make informed trading decisions.
 
@@ -70,12 +72,16 @@ CryptoMoon is a sophisticated Bitcoin price prediction platform that leverages a
     npm run dev
     ```
     The application will be accessible at `http://localhost:5173`.
-### Unified Deployment (Railway/Local)
-To run or deploy both the frontend and backend with a single command:
-```bash
-./start-app.sh
-```
-This script will build the React frontend, install backend dependencies, and start the FastAPI server on port 8000. Under the hood, FastAPI will serve your built React files automatically.
+### 🚀 Deployment (Render/Local)
+To run or deploy both the frontend and backend:
+1.  **Local Development**: Use the `start-app.sh` script or run frontend and backend separately.
+    ```bash
+    ./start-app.sh
+    ```
+2.  **Live Site**: [https://cryptomoon.onrender.com](https://cryptomoon.onrender.com)
+
+The application is configured for automatic deployment on **Render** via its Dockerfile. The backend FastAPI server handles both the API logic and serves the built React frontend.
+
 
 - Navigate to the **Predictions** page to view AI-generated price predictions.
 - Check the **Dashboard** for live Bitcoin market data and charts.
