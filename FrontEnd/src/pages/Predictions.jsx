@@ -145,7 +145,7 @@ export default function Predictions() {
       return
     }
     try {
-      const predict = await api.get(`/predict?date=${`${currentYear}-${currentMonth.toString().padStart(2, '0')}-${selectedDate.toString().padStart(2, '0')}`}&model_use=${model}`)
+      const predict = await api.get(`/predict?date=${`${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${selectedDate.toString().padStart(2, '0')}`}&model_use=${model}`)
       setPred(predict)
     } catch (error) {
       console.log('Error in Prediction \n', error)

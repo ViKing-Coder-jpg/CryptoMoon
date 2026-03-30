@@ -19,8 +19,7 @@ app.add_middleware(
 app.include_router(predict_router)
 app.include_router(btc_router)
 
-# Serve the FrontEnd static files
-# Use absolute path relative to this file
+
 FRONTEND_DIST = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "FrontEnd", "dist"))
 
 if os.path.exists(FRONTEND_DIST):
