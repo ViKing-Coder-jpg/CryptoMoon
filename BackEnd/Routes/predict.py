@@ -14,6 +14,5 @@ async def predict_route(date: str, model_use: str):
     
     return result
 @router.head('/')
-async def func(response:Response):
-    response.status_code=200
+async def func():
     return None
