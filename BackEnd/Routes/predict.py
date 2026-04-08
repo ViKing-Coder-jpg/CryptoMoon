@@ -13,6 +13,7 @@ async def predict_route(date: str, model_use: str):
         return {"error": "Invalid model_use. Choose 'xgb' or 'lstm'"}
     
     return result
-@router.head()
-def func():
-    return {'message':'Server is connected'}
+@router.head('/')
+async def func(response:Response):
+    response.status_code=200
+    return None
