@@ -327,7 +327,7 @@ export default function Predictions() {
                         <div className={`mt-2 text-3xl font-extrabold ${predictedInsights?.isPositive ? 'text-emerald-600' : 'text-red-500'}`}>
                           {predictedInsights ? `${predictedInsights.isPositive ? '+' : ''}${predictedInsights.returnPct}%` : '—'}
                         </div>
-                        <p className="mt-1 text-xs text-gray-500">vs previous close</p>
+                        <p className="mt-1 text-xs  text-gray-500">vs previous close</p>
                       </div>
                       <div>
                         <p className="text-xs font-semibold tracking-[0.2em] text-gray-400">MARKET SENTIMENT</p>
