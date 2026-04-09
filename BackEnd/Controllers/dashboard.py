@@ -1,6 +1,9 @@
 import yfinance as yf
 import httpx
 from fastapi import HTTPException
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+import xml.etree.ElementTree as ET
 
 
 def get_candles(period='90d', interval='1d'):
@@ -73,3 +76,78 @@ async def get_live_btc():
             pass
 
     raise HTTPException(status_code=502, detail="Failed to fetch BTC live price from upstream providers.")
+
+
+async def get_crypto_news(limit: int = 8):
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        # Primary: CryptoCompare news feed (no API key required for basic usage)
+        try:
+            response = await client.get(
+                "https://min-api.cryptocompare.com/data/v2/news/",
+                params={"lang": "EN"},
+            )
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, dict) and isinstance(data.get("Data"), list):
+                    items = []
+                    for item in data["Data"][: max(limit, 1)]:
+                        published_on = item.get("published_on")
+                        published_at = None
+                        if isinstance(published_on, (int, float)):
+                            published_at = datetime.fromtimestamp(
+                                published_on, tz=timezone.utc
+                            ).isoformat()
+                        items.append({
+                            "title": item.get("title"),
+                            "url": item.get("url"),
+                            "source": item.get("source"),
+                            "published_at": published_at,
+                            "image_url": item.get("imageurl"),
+                        })
+                    return items
+        except httpx.HTTPError:
+            pass
+
+        async def fetch_rss(url: str, source_name: str):
+            try:
+                rss_response = await client.get(url)
+                if rss_response.status_code != 200:
+                    return []
+                root = ET.fromstring(rss_response.text)
+                items = []
+                for item in root.findall(".//item"):
+                    title = item.findtext("title")
+                    link = item.findtext("link")
+                    pub = item.findtext("pubDate")
+                    published_at = None
+                    if pub:
+                        try:
+                            dt = parsedate_to_datetime(pub)
+                            if dt.tzinfo is None:
+                                dt = dt.replace(tzinfo=timezone.utc)
+                            published_at = dt.astimezone(timezone.utc).isoformat()
+                        except (TypeError, ValueError):
+                            published_at = None
+                    items.append({
+                        "title": title,
+                        "url": link,
+                        "source": source_name,
+                        "published_at": published_at,
+                        "image_url": None,
+                    })
+                    if len(items) >= max(limit, 1):
+                        break
+                return items
+            except (httpx.HTTPError, ET.ParseError):
+                return []
+
+        # Fallback: RSS feeds
+        coindesk = await fetch_rss("https://www.coindesk.com/arc/outboundfeeds/rss/", "CoinDesk")
+        cointelegraph = await fetch_rss("https://cointelegraph.com/rss", "Cointelegraph")
+        combined = coindesk + cointelegraph
+
+        def sort_key(item):
+            return item.get("published_at") or ""
+
+        combined.sort(key=sort_key, reverse=True)
+        return combined[: max(limit, 1)]

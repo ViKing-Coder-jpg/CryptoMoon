@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FiBarChart2, FiShare2 } from 'react-icons/fi'
+import { FiShare2 } from 'react-icons/fi'
 import BTCCandleChart from '../components/Charts'
 import { api } from '../../functions'
 import { useTitle } from '../hooks/useTitle.js'
@@ -13,6 +13,8 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('Price')
   const [activeTimeframe, setActiveTimeframe] = useState('1d')
   const [liveData, setLiveData] = useState(null)
+  const [newsItems, setNewsItems] = useState([])
+  const [newsLoading, setNewsLoading] = useState(true)
 
   useEffect(() => {
     const fetchLive = () => {
@@ -25,6 +27,24 @@ export default function Dashboard() {
     // Then fetch every 3 seconds to keep it live
     const interval = setInterval(fetchLive, 3000)
 
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      setNewsLoading(true)
+      try {
+        const res = await api.get('/btc-news', { params: { limit: 6 } })
+        setNewsItems(Array.isArray(res.data) ? res.data : [])
+      } catch {
+        setNewsItems([])
+      } finally {
+        setNewsLoading(false)
+      }
+    }
+
+    fetchNews()
+    const interval = setInterval(fetchNews, 5 * 60 * 1000)
     return () => clearInterval(interval)
   }, [])
 
@@ -43,6 +63,7 @@ export default function Dashboard() {
   }
 
   const chartParams = getChartParams(activeTimeframe)
+  const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' })
 
   return (
     <main className="min-h-[80vh] bg-[#F5F2EB]">
@@ -161,58 +182,54 @@ export default function Dashboard() {
           <div className="lg:col-span-2 space-y-6">
             <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
               <div className="flex items-center gap-2 text-darkText">
-                <FiBarChart2 className="h-5 w-5" />
-                <span className="text-lg font-bold">Live Order Book</span>
+                <FiShare2 className="h-5 w-5" />
+                <span className="text-lg font-bold">Crypto News</span>
               </div>
 
-              <div className="mt-4 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
-                <span>PRICE (USD)</span>
-                <span>SIZE (BTC)</span>
-              </div>
-
-              <div className="mt-3 space-y-2">
-                {[
-                  { price: '68,439.50', size: '0.420', width: 'w-[45%]' },
-                  { price: '68,437.00', size: '1.125', width: 'w-[70%]' },
-                  { price: '68,435.20', size: '0.054', width: 'w-[30%]' },
-                ].map((row) => (
-                  <div key={row.price} className="flex items-center justify-between text-sm">
-                    <span className="text-red-400">{row.price}</span>
-                    <div className="flex w-32 items-center justify-end">
-                      <div className={`ml-auto h-7 ${row.width} rounded bg-red-100`}>
-                        <div className="flex h-full items-center justify-end pr-2 text-xs font-semibold text-gray-700">
-                          {row.size}
-                        </div>
+              <div className="mt-4 space-y-4">
+                {newsLoading && (
+                  <div className="space-y-3">
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+                        <div className="h-3 w-3/4 rounded bg-gray-200" />
+                        <div className="mt-3 h-3 w-1/2 rounded bg-gray-200" />
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                )}
 
-              <div className="my-4 border-t border-gray-100" />
-              <div className="text-center">
-                <div className="text-lg font-bold text-darkText">$68,432.10</div>
-                <div className="text-xs text-gray-400">Spread: 0.15 (0.002%)</div>
-              </div>
-              <div className="my-4 border-t border-gray-100" />
-
-              <div className="space-y-2">
-                {[
-                  { price: '68,431.95', size: '0.880', width: 'w-[55%]' },
-                  { price: '68,430.00', size: '2.441', width: 'w-[80%]' },
-                  { price: '68,428.45', size: '0.110', width: 'w-[35%]' },
-                ].map((row) => (
-                  <div key={row.price} className="flex items-center justify-between text-sm">
-                    <span className="text-teal-500">{row.price}</span>
-                    <div className="flex w-32 items-center justify-end">
-                      <div className={`ml-auto h-7 ${row.width} rounded bg-blue-100`}>
-                        <div className="flex h-full items-center justify-end pr-2 text-xs font-semibold text-gray-700">
-                          {row.size}
-                        </div>
-                      </div>
-                    </div>
+                {!newsLoading && newsItems.length === 0 && (
+                  <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-500">
+                    No news available right now. Please check back in a bit.
                   </div>
-                ))}
+                )}
+
+                {!newsLoading && newsItems.length > 0 && (
+                  <div className="space-y-3">
+                    {newsItems.map((item, index) => {
+                      const published = item?.published_at ? new Date(item.published_at) : null
+                      const dateLabel = published ? dateFormatter.format(published) : '—'
+                      return (
+                        <a
+                          key={`${item?.url || item?.title || 'news'}-${index}`}
+                          href={item?.url || '#'}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group block rounded-xl border border-gray-100 bg-white p-4 transition hover:border-gray-200 hover:shadow-sm"
+                        >
+                          <div className="text-sm font-semibold text-darkText group-hover:text-[#F0B429]">
+                            {item?.title || 'Untitled story'}
+                          </div>
+                          <div className="mt-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+                            <span>{item?.source || 'Crypto News'}</span>
+                            <span className="h-1 w-1 rounded-full bg-gray-300" />
+                            <span>{dateLabel}</span>
+                          </div>
+                        </a>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -221,4 +238,3 @@ export default function Dashboard() {
     </main>
   )
 }
-
