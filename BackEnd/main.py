@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from Routes.predict import router as predict_router
 from Routes.show_btc import router as btc_router
 
@@ -37,7 +37,12 @@ async def serve_frontend(full_path: str):
     # Otherwise, return index.html for React routing
     index_file = os.path.join(FRONTEND_DIST, "index.html")
     if os.path.exists(index_file):
-        return FileResponse(index_file)
+        # Ensure correct content-type and avoid serving stale cached HTML
+        return FileResponse(
+            index_file,
+            media_type="text/html",
+            headers={"Cache-Control": "no-cache"},
+        )
     return {"message": "API is online, but frontend not found. Did you run 'npm run build'?"}
 
 
