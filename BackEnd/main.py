@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
 from Routes.predict import router as predict_router
 from Routes.show_btc import router as btc_router
+from Routes.admin import router as admin_router
 
 app = FastAPI()
 
@@ -18,6 +19,7 @@ app.add_middleware(
 
 app.include_router(predict_router)
 app.include_router(btc_router)
+app.include_router(admin_router)
 
 
 FRONTEND_DIST = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "FrontEnd", "dist"))
