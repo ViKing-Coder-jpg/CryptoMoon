@@ -1,5 +1,5 @@
 {
-  "trained_through": "2026-05-02",
+  "trained_through": "2026-01-10",
   "n_train_rows": 3930,
   "hyperparameters": {
     "subsample": 0.6,
@@ -13,24 +13,24 @@
     "objective": "reg:pseudohubererror"
   },
   "baseline_summary": {
-    "rmse_mean": 0.09296192385546018,
-    "rmse_std": 0.034210385186517325,
-    "mae_mean": 0.07024500282451848,
-    "dir_acc_mean": 0.5098039215686274,
-    "dir_acc_filtered_mean": 0.5209385178164252,
-    "direction_aware_score_mean": 0.5122410259856955,
-    "pred_std_mean": 0.04005256928503513
+    "rmse_mean": 0.09287036861917378,
+    "rmse_std": 0.034142058158295865,
+    "mae_mean": 0.07016702158425445,
+    "dir_acc_mean": 0.5109243697478991,
+    "dir_acc_filtered_mean": 0.5206759854757154,
+    "direction_aware_score_mean": 0.5152015815422961,
+    "pred_std_mean": 0.03997969608753919
   },
   "tuned_summary": {
-    "rmse_mean": 0.08309851292114076,
-    "rmse_std": 0.027069188597960796,
-    "mae_mean": 0.06203641490099491,
-    "dir_acc_mean": 0.511484593837535,
-    "dir_acc_filtered_mean": 0.5238226886231414,
-    "direction_aware_score_mean": 0.5345062561747813,
-    "pred_std_mean": 0.024876304157078265
+    "rmse_mean": 0.08307171166870095,
+    "rmse_std": 0.027013152085245365,
+    "mae_mean": 0.06199897053052748,
+    "dir_acc_mean": 0.5095238095238095,
+    "dir_acc_filtered_mean": 0.5226275564597984,
+    "direction_aware_score_mean": 0.5412403695080623,
+    "pred_std_mean": 0.02486914172768593
   },
-  "search_best_score": 0.7053978774902253,
+  "search_best_score": 0.7045442189536398,
   "feature_names": [
     "MACD",
     "RSI",
@@ -79,9 +79,6 @@
     "funding_rate",
     "funding_rate_zscore_7"
   ],
-  "saved_at_utc": "2026-05-02T10:38:38.017171+00:00",
-  "version_path": "/Users/vinayakmac/Desktop/Projects/CryptoMoon/BackEnd/Model/versions/xgb_20260502T103838Z.joblib",
-  "last_update_kind": "incremental",
-  "last_update_trees_added": 10,
-  "last_update_window": 365
+  "saved_at_utc": "2026-05-02T11:02:33.848874+00:00",
+  "version_path": "/Users/vinayakmac/Desktop/Projects/CryptoMoon/BackEnd/Model/versions/xgb_20260502T110233Z.joblib"
 }

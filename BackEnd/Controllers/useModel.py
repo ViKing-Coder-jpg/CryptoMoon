@@ -11,6 +11,7 @@ from Controllers.external_signals import load_external_signals
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(BASE_DIR, "Model", "XGBoost_model.joblib")
 FEATURES_PATH = os.path.join(BASE_DIR, "Model", "feature_names.joblib")
+LSTM_MODEL_PATH = os.path.join(BASE_DIR, "Model", "LSTM_model.joblib")
 CROSS_ASSETS_CSV_PATH = os.path.join(BASE_DIR, "Model", "data", "cross_assets.csv")
 
 # Inference-time download window. The 200-day SMA + 30-row dropna means the
@@ -28,6 +29,7 @@ FORECAST_HORIZON_DAYS = 5
 # Cache the loaded objects keyed by the file mtimes and reload only when they advance.
 _model_cache: dict = {"mtime": None, "obj": None}
 _features_cache: dict = {"mtime": None, "obj": None}
+_lstm_cache: dict = {"mtime": None, "obj": None}
 
 
 def _get_model():
@@ -44,6 +46,20 @@ def _get_feature_names():
         _features_cache["obj"] = joblib.load(FEATURES_PATH)
         _features_cache["mtime"] = mtime
     return _features_cache["obj"]
+
+
+def _get_lstm_artifact():
+    """mtime-cached LSTM artifact loader. Lazy-imports `Model.lstm` so the
+    rest of the backend imports cleanly even before `torch` is installed
+    (the LSTM endpoint just 503s in that case)."""
+    if not os.path.exists(LSTM_MODEL_PATH):
+        return None
+    mtime = os.path.getmtime(LSTM_MODEL_PATH)
+    if _lstm_cache["mtime"] != mtime:
+        from Model.lstm import load_artifact
+        _lstm_cache["obj"] = load_artifact(LSTM_MODEL_PATH)
+        _lstm_cache["mtime"] = mtime
+    return _lstm_cache["obj"]
 
 
 def _load_cross_assets_for_window(start_date: datetime, end_date: datetime) -> pd.DataFrame | None:
@@ -80,4 +96,40 @@ def predict_xgb(date: str):
     }
 
 def predict_lstm(date: str):
-    return {"date": date, "model": "lstm", "prediction": None}
+    """Mirror predict_xgb's pipeline but feed a 30-day sequence of features
+    into the LSTM artifact. Returns the same JSON keys as predict_xgb so the
+    frontend renders both with no code changes.
+    """
+    artifact = _get_lstm_artifact()
+    if artifact is None:
+        return {
+            "date": date,
+            "model": "lstm",
+            "horizon_days": FORECAST_HORIZON_DAYS,
+            "prediction_return": None,
+            "prediction_price": None,
+            "error": "LSTM model not yet trained -- run the LSTM cells in CryptoMoon.ipynb first.",
+        }
+
+    end_date = datetime.strptime(date, "%Y-%m-%d")
+    start_date = end_date - timedelta(days=INFERENCE_WINDOW_DAYS)
+    btc = yf.download("BTC-USD", start=start_date, end=end_date, interval="1d", progress=False)
+    if isinstance(btc.columns, pd.MultiIndex):
+        btc.columns = [col[0] for col in btc.columns]
+
+    cross_assets = _load_cross_assets_for_window(start_date, end_date)
+    external_signals = load_external_signals()
+    btc_df = feature_conversion(btc, cross_assets=cross_assets, external_signals=external_signals)
+    btc_df = btc_df[artifact.feature_names]
+
+    # Lazy-import predict_one so torch is only required when the endpoint runs.
+    from Model.lstm import predict_one
+    pred_return = predict_one(artifact, btc_df)
+
+    return {
+        "date": date,
+        "model": "lstm",
+        "horizon_days": artifact.horizon_days,
+        "prediction_return": pred_return * 100,
+        "prediction_price": (1 + pred_return) * btc["Close"].iloc[-1],
+    }
