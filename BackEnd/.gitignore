@@ -2,4 +2,5 @@
 venv
 *__pycache__
 Model/versions/
+versions
 *.tmp
