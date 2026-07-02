@@ -2,7 +2,11 @@
 
 @theme {
   --color-gold: #F0B429;
+  --color-gold-light: #FFD166;
+  --color-gold-dark: #C8880A;
+  --color-amber-warm: #E9A915;
   --color-cream: #F5F2EB;
+  --color-cream-light: #FDFAF3;
   --color-darkText: #111111;
   --font-display: "Fraunces", serif;
   --font-body: "DM Sans", sans-serif;
@@ -10,6 +14,37 @@
 
 @layer base {
   body {
-    @apply bg-cream font-body text-darkText;
+    @apply bg-amber-50 font-body text-darkText antialiased;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 30%, #fff8e1 60%, #fafaf5 100%);
+    min-height: 100vh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 30px rgba(240, 180, 41, 0.3), 0 0 60px rgba(240, 180, 41, 0.15);
+  }
+
+  .gold-text-glow {
+    text-shadow: 0 0 20px rgba(240, 180, 41, 0.5);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(240, 180, 41, 0.2);
+  }
+
+  .gradient-gold {
+    background: linear-gradient(135deg, #F0B429, #FFD166, #E9A915);
   }
 }
