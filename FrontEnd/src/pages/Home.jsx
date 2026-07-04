@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fi'
 import { useTitle } from '../hooks/useTitle.js'
 import { api } from '../../functions'
+import bitcoinImg from '../assets/Bitcoin.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -86,6 +87,44 @@ function AnimatedNumber({ value }) {
   }, [value])
 
   return <span ref={ref}>{display}</span>
+}
+
+// ─── Floating Bitcoin ─────────────────────────────────────────────────────────
+
+function FloatingBitcoin({ size, x, y, delay, rotate, duration }) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    gsap.to(el, {
+      y: '-=40',
+      rotation: '+=20',
+      duration: duration || 4,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      delay: delay
+    })
+  }, [delay, duration])
+
+  return (
+    <motion.div
+      className="absolute pointer-events-none z-10"
+      style={{ width: size, left: x, top: y, rotate: rotate }}
+      initial={{ opacity: 0, scale: 0.2, y: 100 }}
+      animate={{ opacity: 0.85, scale: 1, y: 0 }}
+      transition={{ duration: 1.4, delay: delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div ref={ref}>
+        <img 
+          src={bitcoinImg} 
+          alt="Bitcoin" 
+          className="w-full h-auto object-contain drop-shadow-[0_20px_40px_rgba(240,180,41,0.6)]" 
+        />
+      </div>
+    </motion.div>
+  )
 }
 
 // ─── Floating Orb ─────────────────────────────────────────────────────────────
@@ -435,6 +474,12 @@ export function Home() {
         <Sparkle x="65%" y="70%" delay={1.6} />
         <Sparkle x="30%" y="75%" delay={2.4} />
 
+        {/* Floating Bitcoins */}
+        <FloatingBitcoin size={160} x="8%" y="18%" delay={0.2} rotate={-15} duration={4.5} />
+        <FloatingBitcoin size={100} x="16%" y="65%" delay={1.5} rotate={20} duration={3.8} />
+        <FloatingBitcoin size={180} x="78%" y="22%" delay={0.7} rotate={10} duration={5.2} />
+        <FloatingBitcoin size={120} x="84%" y="62%" delay={2.1} rotate={-25} duration={4.1} />
+
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -538,8 +583,10 @@ export function Home() {
       </section>
 
       {/* ─── FEATURES ───────────────────────────────────────────────── */}
-      <section className="py-10 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-10 px-6 relative">
+        <FloatingBitcoin size={130} x="-2%" y="20%" delay={1.1} rotate={-10} duration={4.8} />
+        <FloatingBitcoin size={90} x="95%" y="60%" delay={0.4} rotate={25} duration={4.0} />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -560,38 +607,12 @@ export function Home() {
         </div>
       </section>
 
-      {/* ─── TRUSTED BY ─────────────────────────────────────────────── */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-[10px] font-bold uppercase tracking-[0.35em] text-amber-400"
-          >
-            Trusted by top crypto brands worldwide
-          </motion.p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-8">
-            {['Binance', 'Coinbase', 'Kraken', 'Gemini', 'OKX'].map((brand, i) => (
-              <motion.div
-                key={brand}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ scale: 1.08 }}
-                className="rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-sm px-7 py-3.5 text-sm font-bold text-amber-700 shadow-sm cursor-default"
-              >
-                {brand}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ─── PROBLEMS ───────────────────────────────────────────────── */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-16 px-6 relative">
+        <FloatingBitcoin size={110} x="92%" y="10%" delay={1.8} rotate={-15} duration={4.5} />
+        <FloatingBitcoin size={140} x="-5%" y="70%" delay={0.9} rotate={15} duration={5.0} />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -611,8 +632,10 @@ export function Home() {
       </section>
 
       {/* ─── CTA BANNER ─────────────────────────────────────────────── */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-20 px-6 relative">
+        <FloatingBitcoin size={160} x="-8%" y="30%" delay={0.5} rotate={-20} duration={5.5} />
+        <FloatingBitcoin size={120} x="90%" y="40%" delay={1.3} rotate={10} duration={4.2} />
+        <div className="max-w-4xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
